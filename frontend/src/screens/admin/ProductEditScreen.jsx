@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import {
     useGetProductDetailsQuery,
     useUpdateProductMutation,
-    //   useUploadProductImageMutation,
+    useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
 
 const ProductEditScreen = () => {
@@ -28,23 +28,13 @@ const ProductEditScreen = () => {
 
     const [updateProduct, { isLoading: loadingUpdate }] = useUpdateProductMutation();
 
-    useEffect(() => {
-        if (product) {
-            setName(product.name);
-            setPrice(product.price);
-            setImage(product.image);
-            setBrand(product.brand);
-            setCategory(product.category);
-            setCountInStock(product.countInStock);
-            setDescription(product.description);
-        }
-    }, [product]);
+    const [uploadProductImage, {isLoading: loadingUpload}] = useUploadProductImageMutation();
 
-    const submitHandler = async(e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         try {
             const updatedProduct = {
-                _id: productId,
+                productId,
                 name,
                 price,
                 image,
@@ -62,8 +52,28 @@ const ProductEditScreen = () => {
         }
     }
 
-    const uploadFileHandler = () => {
+    useEffect(() => {
+        if (product) {
+            setName(product.name);
+            setPrice(product.price);
+            setImage(product.image);
+            setBrand(product.brand);
+            setCategory(product.category);
+            setCountInStock(product.countInStock);
+            setDescription(product.description);
+        }
+    }, [product]);
 
+    const uploadFileHandler = async(e) => {
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+        try {
+            const res = await uploadProductImage(formData).unwrap();
+            toast.success(res.message);
+            setImage(res.image);
+        } catch (error) {
+            toast.error(error?.data?.message || error.error);
+        }
     }
 
 
