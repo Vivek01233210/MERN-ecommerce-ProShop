@@ -31,13 +31,20 @@ function fileFilter(req, file, cb) {
 }
 
 const upload = multer({ storage, fileFilter });
+const uploadSingleImage = upload.single('image');
 
-router.post('/', upload.single('image'), (req, res) => {
-    // the actual upload is done by the 'upload' middleware, we just have to send back a response.
-    res.status(200).send({
+// the actual upload is done by the 'upload' middleware, we just have to send back a response.
+router.post('/', (req, res) => {
+    uploadSingleImage(req, res, function (err) {
+      if (err) {
+        return res.status(400).send({ message: err.message });
+      }
+  
+      res.status(200).send({
         message: 'Image uploaded successfully',
         image: `/${req.file.path}`,
+      });
     });
-})
+  });
 
 export default router;
