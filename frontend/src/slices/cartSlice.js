@@ -22,31 +22,32 @@ const cartSlice = createSlice({
             } else {
                 state.cartItems = [...state.cartItems, item];
             }
-            
+
             // updating cart in the localStorage
             return updateCart(state);
         },
-        removeFromCart: (state, action)=>{
-            state.cartItems = state.cartItems.filter((item)=>item._id !== action.payload);
-            
+        removeFromCart: (state, action) => {
+            state.cartItems = state.cartItems.filter((item) => item._id !== action.payload);
+
             // updating cart in the localStorage
             return updateCart(state);
         },
-        saveShippingAddress: (state, action)=>{
+        saveShippingAddress: (state, action) => {
             state.shippingAddress = action.payload;
             return updateCart(state);
         },
-        savePaymentMethod: (state, action)=>{
+        savePaymentMethod: (state, action) => {
             state.paymentMethod = action.payload;
             return updateCart(state);
         },
-        clearCartItems: (state, action)=>{
+        clearCartItems: (state, action) => {
             state.cartItems = [];
             return updateCart(state);
         },
+        resetCart: (state) => (state = initialState),
     },
 });
 
-export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems } = cartSlice.actions;
+export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
