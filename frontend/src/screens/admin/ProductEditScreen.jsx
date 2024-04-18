@@ -125,7 +125,7 @@ const ProductEditScreen = () => {
                                 onChange={uploadFileHandler}
                                 type='file'
                             ></Form.Control>
-                            {/* {loadingUpload && <Loader />} */}
+                            {loadingUpload && <Loader />}
                         </Form.Group>
 
                         <Form.Group controlId='brand' className='mb-2'>
@@ -161,7 +161,8 @@ const ProductEditScreen = () => {
                         <Form.Group controlId='description' className='mb-3'>
                             <Form.Label>Description</Form.Label>
                             <Form.Control
-                                type='text'
+                                as='textarea'
+                                row='3'
                                 placeholder='Enter description'
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
