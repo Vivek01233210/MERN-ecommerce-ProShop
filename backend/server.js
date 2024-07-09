@@ -12,7 +12,7 @@ import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5200;
 connectDB();
 
 const app = express();
