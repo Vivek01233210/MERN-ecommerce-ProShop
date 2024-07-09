@@ -17,8 +17,23 @@ connectDB();
 
 const app = express();
 
+const corsOptions = {
+    // origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+        // Check if the origin is allowed
+        const allowedOrigins = [
+            "http://localhost:3000",
+            "http://jobifybyvivek.online",
+            "http://www.jobifybyvivek.online",
+        ];
+        const isAllowed = allowedOrigins.includes(origin);
+        callback(null, isAllowed ? origin : false);
+    },
+    methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(cors());
 app.use(express.json());  // body parser
 app.use(express.urlencoded({ extended: true }));
 

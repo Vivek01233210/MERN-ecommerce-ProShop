@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Message from '../components/Message';
@@ -9,7 +8,6 @@ import Loader from '../components/Loader';
 import {
     useDeliverOrderMutation,
     useGetOrderDetailsQuery,
-    // useGetPaypalClientIdQuery,
     usePayOrderMutation,
 } from '../slices/ordersApiSlice';
 import { formatCurrency } from '../utils/currencyFormatter.js';
@@ -25,11 +23,10 @@ const OrderScreen = () => {
 
     const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
 
-    const [{ isPending }] = usePayPalScriptReducer();
 
     function onApproveTest() {
         toast.info('Payment window under development!');
-     }
+    }
 
     const deliverHandler = async () => {
         toast.info('Button disabled for safety reasons!');
@@ -156,19 +153,16 @@ const OrderScreen = () => {
                                 <ListGroup.Item>
                                     {loadingPay && <Loader />}
 
-                                    {isPending ? (
-                                        <Loader />
-                                    ) : (
-                                        <div>
-                                            {/* THIS BUTTON IS FOR TESTING! REMOVE BEFORE PRODUCTION! */}
-                                            <Button
-                                                style={{ marginBottom: '10px' }}
-                                                onClick={onApproveTest}
-                                            >
-                                                Pay Order
-                                            </Button>
-                                        </div>
-                                    )}
+
+                                    <div>
+                                        <Button
+                                            style={{ marginBottom: '10px' }}
+                                            onClick={onApproveTest}
+                                        >
+                                            Pay Order
+                                        </Button>
+                                    </div>
+
                                 </ListGroup.Item>
                             )}
 

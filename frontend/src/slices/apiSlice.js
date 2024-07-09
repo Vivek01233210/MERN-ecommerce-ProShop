@@ -3,6 +3,7 @@ const baseURL = process.env.REACT_APP_API_URL;
 
 const baseQuery = fetchBaseQuery({
     baseUrl: baseURL,
+    credentials: 'include',
 });
 
 export const apiSlice = createApi({
