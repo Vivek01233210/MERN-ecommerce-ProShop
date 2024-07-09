@@ -34,15 +34,16 @@ const ProductListScreen = () => {
     }
 
     const deleteHandler = async(productId) => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
-            try {
-                const res = await deleteProduct(productId);
-                toast.success(res.data.message);
-                refetch();
-            } catch (error) {
-                toast.error(error?.data?.message || error.error);
-            }
-        }
+        toast.info('Button disabled for safety reasons!')
+        // if (window.confirm('Are you sure you want to delete this product?')) {
+        //     try {
+        //         const res = await deleteProduct(productId);
+        //         toast.success(res.data.message);
+        //         refetch();
+        //     } catch (error) {
+        //         toast.error(error?.data?.message || error.error);
+        //     }
+        // }
     }
 
     return (
@@ -84,7 +85,7 @@ const ProductListScreen = () => {
                                 <tr key={product._id}>
                                     <td>{product._id}</td>
                                     <td>{product.name}</td>
-                                    <td>${product.price}</td>
+                                    <td>₹{product.price}</td>
                                     <td>{product.category}</td>
                                     <td>{product.brand}</td>
                                     <td>

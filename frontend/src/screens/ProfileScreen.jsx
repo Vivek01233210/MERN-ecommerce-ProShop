@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import { useProfileMutation } from '../slices/usersApiSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { formatCurrency } from '../utils/currencyFormatter.js';
 
 const ProfileScreen = () => {
     const [name, setName] = useState('');
@@ -123,11 +124,12 @@ const ProfileScreen = () => {
                             </tr>
                         </thead>
                         <tbody>
+                            {orders.length === 0 && <tr><td colSpan={6}>You haven't place any order yet!</td></tr>}
                             {orders.map((order) => (
                                 <tr key={order._id}>
                                     <td>{order._id}</td>
                                     <td>{order.createdAt.substring(0, 10)}</td>
-                                    <td>{order.totalPrice}</td>
+                                    <td>₹{formatCurrency(order.totalPrice)}</td>
                                     <td>
                                         {order.isPaid ? (
                                             order.paidAt.substring(0, 10)

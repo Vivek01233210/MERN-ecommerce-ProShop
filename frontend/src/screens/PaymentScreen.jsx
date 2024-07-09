@@ -7,7 +7,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { savePaymentMethod } from '../slices/cartSlice';
 
 const PaymentScreen = () => {
-    const [paymentMethod, setPaymentMethod] = useState('PayPal');
+    const [paymentMethod, setPaymentMethod] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -39,11 +39,33 @@ const PaymentScreen = () => {
                         <Form.Check
                             className='my-2'
                             type='radio'
-                            label='PayPal or Credit Card'
-                            id='PayPal'
+                            label='Credit Card'
                             name='paymentMethod'
-                            value='PayPal'
-                            checked
+                            value="Credit Card"
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        ></Form.Check>
+                        <Form.Check
+                            className='my-2'
+                            type='radio'
+                            label='Cash On Delivery'
+                            name='paymentMethod'
+                            value="Cash On Delivery"
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        ></Form.Check>
+                        <Form.Check
+                            className='my-2'
+                            type='radio'
+                            label='UPI'
+                            name='paymentMethod'
+                            value="UPI"
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        ></Form.Check>
+                        <Form.Check
+                            className='my-2'
+                            type='radio'
+                            label='Net Banking'
+                            name='paymentMethod'
+                            value="Net Banking"
                             onChange={(e) => setPaymentMethod(e.target.value)}
                         ></Form.Check>
                     </Col>

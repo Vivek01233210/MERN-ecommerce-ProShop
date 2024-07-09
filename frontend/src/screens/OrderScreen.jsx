@@ -12,41 +12,34 @@ import {
     // useGetPaypalClientIdQuery,
     usePayOrderMutation,
 } from '../slices/ordersApiSlice';
+import { formatCurrency } from '../utils/currencyFormatter.js';
 
 const OrderScreen = () => {
     const { id: orderId } = useParams();
 
-    const {userInfo} = useSelector(state=>state.auth);
+    const { userInfo } = useSelector(state => state.auth);
 
-    const { data: order, refetch,  isLoading, error } = useGetOrderDetailsQuery(orderId);
+    const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
-    const [ {isLoading: loadingPay}] = usePayOrderMutation();
+    const [{ isLoading: loadingPay }] = usePayOrderMutation();
 
-    const [deliverOrder, {isLoading: loadingDeliver}] = useDeliverOrderMutation();
+    const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
 
     const [{ isPending }] = usePayPalScriptReducer();
 
-    useEffect(() => {
-          if (order && !order.isPaid) {
-            if (!window.paypal) {
-            //   loadPaypalScript();
-            }
-          }
-      }, [order]);
+    function onApproveTest() {
+        toast.info('Payment window under development!');
+     }
 
-    function onApprove(){}
-    function onApproveTest(){}
-    function onError(){}
-    function createOrder(){}
-
-    const deliverHandler = async()=>{
-        try {
-            await deliverOrder(orderId);
-            refetch();
-            toast.success('Order delivered');
-        } catch (error) {
-            toast.error(error?.data?.message || error.error); 
-        }
+    const deliverHandler = async () => {
+        toast.info('Button disabled for safety reasons!');
+        // try {
+        //     await deliverOrder(orderId);
+        //     refetch();
+        //     toast.success('Order delivered');
+        // } catch (error) {
+        //     toast.error(error?.data?.message || error.error);
+        // }
     }
 
     return isLoading ? (
@@ -119,7 +112,7 @@ const OrderScreen = () => {
                                                     </Link>
                                                 </Col>
                                                 <Col md={4}>
-                                                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                                                    {item.qty} x ₹{formatCurrency(item.price)} = ₹{formatCurrency(item.qty) * item.price}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -138,25 +131,25 @@ const OrderScreen = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${order.itemsPrice}</Col>
+                                    <Col>₹{formatCurrency(order.itemsPrice)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${order.shippingPrice}</Col>
+                                    <Col>₹{formatCurrency(order.shippingPrice)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${order.taxPrice}</Col>
+                                    <Col>₹{formatCurrency(order.taxPrice)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>₹{formatCurrency(order.totalPrice)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             {!order.isPaid && (
@@ -169,19 +162,11 @@ const OrderScreen = () => {
                                         <div>
                                             {/* THIS BUTTON IS FOR TESTING! REMOVE BEFORE PRODUCTION! */}
                                             <Button
-                        style={{ marginBottom: '10px' }}
-                        onClick={onApproveTest}
-                      >
-                        Test Pay Order
-                      </Button>
-
-                                            <div>
-                                                <PayPalButtons
-                                                    createOrder={createOrder}
-                                                    onApprove={onApprove}
-                                                    onError={onError}
-                                                ></PayPalButtons>
-                                            </div>
+                                                style={{ marginBottom: '10px' }}
+                                                onClick={onApproveTest}
+                                            >
+                                                Pay Order
+                                            </Button>
                                         </div>
                                     )}
                                 </ListGroup.Item>
@@ -190,9 +175,7 @@ const OrderScreen = () => {
                             {loadingDeliver && <Loader />}
 
                             {userInfo &&
-                                userInfo.user.isAdmin &&
-                                order.isPaid &&
-                                !order.isDelivered && (
+                                userInfo.user.isAdmin && (
                                     <ListGroup.Item>
                                         <Button
                                             type='button'

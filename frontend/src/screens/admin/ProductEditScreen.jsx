@@ -32,24 +32,25 @@ const ProductEditScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            const updatedProduct = {
-                productId,
-                name,
-                price,
-                image,
-                brand,
-                category,
-                description,
-                countInStock,
-            }
-            await updateProduct(updatedProduct).unwrap();  // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block.
-            toast.success('Product updated!');
-            refetch();
-            navigate('/admin/productlist');
-        } catch (error) {
-            toast.error(error?.data?.message || error.error);
-        }
+        toast.info('Button disabled for safety reasons!');
+        // try {
+        //     const updatedProduct = {
+        //         productId,
+        //         name,
+        //         price,
+        //         image,
+        //         brand,
+        //         category,
+        //         description,
+        //         countInStock,
+        //     }
+        //     await updateProduct(updatedProduct).unwrap();  // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block.
+        //     toast.success('Product updated!');
+        //     refetch();
+        //     navigate('/admin/productlist');
+        // } catch (error) {
+        //     toast.error(error?.data?.message || error.error);
+        // }
     }
 
     useEffect(() => {

@@ -16,15 +16,16 @@ const UserListScreen = () => {
     const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
 
     const deleteHandler = async (userId) => {
-        if (window.confirm('Are you sure you want to delete the user?')) {
-            try {
-                const res = await deleteUser(userId);
-                toast.success(res.data.message);
-                refetch();
-            } catch (error) {
-                toast.error(error?.data?.message || error.error);
-            }
-        }
+        toast.info('Button disabled for safety reasons!')
+        // if (window.confirm('Are you sure you want to delete the user?')) {
+        //     try {
+        //         const res = await deleteUser(userId);
+        //         toast.success(res.data.message);
+        //         refetch();
+        //     } catch (error) {
+        //         toast.error(error?.data?.message || error.error);
+        //     }
+        // }
     }
 
     return (

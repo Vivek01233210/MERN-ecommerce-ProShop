@@ -3,6 +3,7 @@ import { Carousel, Image } from 'react-bootstrap';
 import Message from './Message';
 import { useGetTopProductsQuery } from '../slices/productsApiSlice';
 import Loader from './Loader';
+import { formatCurrency } from '../utils/currencyFormatter.js';
 
 const ProductCarousel = () => {
 
@@ -18,7 +19,7 @@ const ProductCarousel = () => {
                         <Image src={product.image} alt={product.name} fluid />
                         <Carousel.Caption className='carousel-caption'>
                             <h2 className='text-white text-right'>
-                                {product.name} (${product.price})
+                                {product.name} (₹{formatCurrency(product.price)})
                             </h2>
                         </Carousel.Caption>
                     </Link>

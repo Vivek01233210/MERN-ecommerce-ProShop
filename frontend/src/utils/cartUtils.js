@@ -5,19 +5,20 @@ export const addDecimals = (num) =>{
 export const updateCart = (state)=>{
     // Calculate price of all the items in the cart and save it in a variable in the state.
     const itemsPrice = state.cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    state.itemsPrice = addDecimals(itemsPrice);
+    state.itemsPrice = itemsPrice;
     
-    // Calculate shipping price (if order > $100 --> shipping free, else $10 shipping fee)
-    const shippingPrice = itemsPrice > 100 ? 0 : 10;
-    state.shippingPrice = addDecimals(shippingPrice);
+    // Calculate shipping price (if order > ₹5000 --> shipping free, else ₹60 shipping fee)
+    const shippingPrice = itemsPrice > 5000 ? 0 : 60;
+    state.shippingPrice = shippingPrice;
 
     // Calculate tax price (15% tax)
-    const taxPrice = Number((0.15 * state.itemsPrice).toFixed(2));
-    state.taxPrice = addDecimals(taxPrice);
+    const taxPrice = Number(Math.round(0.15 * state.itemsPrice));
+    state.taxPrice = taxPrice;
+
 
     // Calculate total price
     const totalPrice = itemsPrice + shippingPrice + taxPrice;
-    state.totalPrice = addDecimals(totalPrice);
+    state.totalPrice = totalPrice;
 
     // save the updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(state));

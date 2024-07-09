@@ -15,6 +15,7 @@ const HomeScreen = () => {
     const { pageNumber, keyword } = useParams();
 
     const { data, isLoading, error } = useGetProductsQuery({ keyword, pageNumber });
+    // console.log(data?.products)
 
     return (
         <>

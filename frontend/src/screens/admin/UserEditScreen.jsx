@@ -24,15 +24,16 @@ const UserEditScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            const updatedUser = {userId, name, email, isAdmin};
-            await updateUser(updatedUser);
-            toast.success('User Updated')
-            refetch();
-            navigate('/admin/userlist')
-        } catch (error) {
-            toast.error(error?.data?.message || ErrorEvent.error)
-        }
+        toast.info('Button disabled for safety reasons!')
+        // try {
+        //     const updatedUser = {userId, name, email, isAdmin};
+        //     await updateUser(updatedUser);
+        //     toast.success('User Updated')
+        //     refetch();
+        //     navigate('/admin/userlist')
+        // } catch (error) {
+        //     toast.error(error?.data?.message || ErrorEvent.error)
+        // }
     }
 
     useEffect(() => {
